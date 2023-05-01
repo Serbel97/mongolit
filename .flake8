@@ -1,0 +1,8 @@
+[flake8]
+ignore = E203,W503,E704
+exclude = .git,.pytest_cache,venv,__pycache__,build,dist,docs,veolia_api.egg-info,apps/core/models/__init__.py,apps/core/migrations,veolia_api/settings
+max-line-length = 119
+
+per-file-ignores =
+    apps/core/auth/permissions.py:F821
+    apps/core/checkers/__init__.py:F401
