@@ -4,7 +4,7 @@ from typing import List
 
 from flask import jsonify
 
-from encoders import MongoJSONEncoder
+from apps.encoders import MongoJSONEncoder
 
 
 def single_response(item: dict, http_status: int):

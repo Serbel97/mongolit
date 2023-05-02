@@ -2,8 +2,8 @@ from bson import ObjectId
 
 from flask import render_template, request
 
-from resposne import pagination_response, single_response
-from views.base import BaseView
+from apps.resposne import pagination_response, single_response
+from apps.views.base import BaseView
 
 
 class BlogManagement(BaseView):

@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_pymongo import pymongo
 
-from views.blog import BlogDetail, BlogManagement
+from apps.views.blog import BlogDetail, BlogManagement
 
 
 def register_api(app, name):
@@ -18,10 +18,12 @@ def register_api(app, name):
 
 class FlaskProject(Flask):
     def __init__(self, __name__):
-        super().__init__(__name__)
-        BASE_DIR = Path(__file__).resolve(strict=True).parent
-        ENV_FILE = os.path.join(BASE_DIR, '.env')
+        BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
+        template_dir = os.path.join(BASE_DIR, 'templates')
+        super().__init__(__name__, template_folder=template_dir)
+
+        ENV_FILE = os.path.join(BASE_DIR, '.env')
         if os.path.exists(ENV_FILE):
             load_dotenv(dotenv_path=ENV_FILE, verbose=True)
         else:
