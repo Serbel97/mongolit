@@ -1,29 +1,46 @@
 import json
 
+import bcrypt
+
 from flask import request, redirect, url_for, session
 
+from apps.decorators import require_auth
 from apps.encoders import MongoJSONEncoder
 
 
 def auth(db):
-    data = {
-        'email': request.form['email'],
-        # 'password': request.form['password'],
-    }
+    user = db.user.find_one({'email': request.form['email']})
 
-    user = db.user.find_one(data)
-    user = json.loads(MongoJSONEncoder().encode(user))
+    if user:
+        # Get the password from the form submission
+        request_password = request.form['password'].encode('utf-8')
+        stored_password = user['password'].encode('utf-8')  # Encode the stored password
+        is_valid_password = bcrypt.checkpw(request_password, stored_password)
 
-    session['Authorization'] = user['_id']
+        if is_valid_password:
+            user = json.loads(MongoJSONEncoder().encode(user))
+            session['Authorization'] = user['_id']
+            return redirect(url_for('article_management_list'))
+    return redirect(url_for('login'))
 
-    return redirect(url_for('article_management_list'))
 
-
-def logout():
+@require_auth
+def logout(db):
     if 'Authorization' in session:
         del session['Authorization']
     return redirect(url_for('login'))
 
 
-def signup():
-    pass
+def signup(db):
+    password = request.form['password'].encode('utf-8')
+    hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
+
+    user = {
+        "name": request.form['name'],
+        "email": request.form['email'],
+        "password": hashed_password.decode('utf-8')
+    }
+
+    db.users.insert_one(user)
+
+    return redirect(url_for('login'))

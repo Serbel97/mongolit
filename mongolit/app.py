@@ -13,6 +13,7 @@ from apps.encoders import MongoJSONEncoder
 from apps.views.article import create_article, list_articles, detail_article, delete_article, update_article, \
     update_comment_article
 from apps.views.auth import auth, logout, signup
+from apps.views.user import users_me, update_user, update_user_password
 
 
 class FlaskProject(Flask):
@@ -41,7 +42,7 @@ if __name__ == '__main__':
 
 
 def render_create_article():
-    return render_template('create.html', token='64514ab751adf62ec0bb20ce')
+    return render_template('create.html')
 
 
 def render_update_article(db, _id):
@@ -93,5 +94,11 @@ flask.add_url_rule(
 
 flask.add_url_rule('/', 'login', login, methods=['GET'])
 flask.add_url_rule('/auth', 'auth', partial(auth, flask.db), methods=['POST'])
-flask.add_url_rule('/logout', 'logout', logout, methods=['GET'])
+flask.add_url_rule('/logout', 'logout', partial(logout, flask.db), methods=['GET'])
 flask.add_url_rule('/signup', 'signup', partial(signup, flask.db), methods=['GET'])
+
+flask.add_url_rule('/users/me', 'user_profile', partial(users_me, flask.db), methods=['GET'])
+flask.add_url_rule('/users/<_id>/update', 'user_update', partial(update_user, flask.db), methods=['POST'])
+flask.add_url_rule(
+    '/users/<_id>/update/password', 'user_update_pwd', partial(update_user_password, flask.db), methods=['POST']
+)
