@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Blog Post - Start Bootstrap Template</title>
+
+
+    <!-- Favicon-->
+    <link href='{{ url_for('static', filename='assets/favicon.ico') }}' rel='icon' type='image/x-icon'>
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/album/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/headers.css') }}" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Responsive navbar-->
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24"
+                 fill="currentColor" viewBox="0 0 16 16">
+                <use xlink:href="#bootstrap"></use>
+            </svg>
+        </a>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li>
+                <a href="{{ url_for('article_management_list', limit='9', page=1) }}"
+                   class="nav-link px-2 link-secondary">
+                    Articles
+                </a>
+            </li>
+            <li><a href="#" class="nav-link px-2 link-dark">Users</a></li>
+        </ul>
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+            <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+        </form>
+
+        <div class="col-md-3 text-end">
+            <button type="button" class="btn btn-secondary">Login</button>
+            <button type="button" class="btn btn-light text-dark me-2">Sign-up</button>
+
+        </div>
+    </header>
+</div>
+
+<!-- Page content-->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Post content-->
+            <article>
+                <!-- Post header-->
+                <header class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <!-- Post title-->
+                        <h1 class="fw-bolder mb-1">{{ article.name }}</h1>
+                        <!-- Post meta content USER-->
+                        <div class="text-muted fst-italic mb-2">{{ article.date }}</div>
+
+                        <!-- Post categories -->
+                        {% for category in article.category %}
+                            <a class="badge bg-secondary text-decoration-none link-light">{{ category }}</a>
+                        {% endfor %}
+                    </div>
+                    <!-- Button on the right side -->
+                    <a href="{{ url_for('article_detail_update', _id=article['_id']) }}">
+                        <button type="button" class="btn btn-light text-dark me-2">Edit</button>
+                    </a>
+
+                </header>
+
+                <!-- Preview image figure-->
+                <figure class="mb-4"><img class="img-fluid rounded"
+                                          src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..."/></figure>
+                <!-- Post content-->
+                <section class="mb-5">
+                    <p class="fs-5 mb-4">{{ article.text }}</p>
+                </section>
+            </article>
+
+            <!-- Comments section-->
+            <section class="mb-5">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <form class="mb-4" method="POST" action="/articles/{{ article._id }}/comments">
+                            <textarea class="form-control" rows="3" name="text_comment"
+                                      placeholder="Join the discussion and leave a comment!"></textarea>
+                            <div class="d-grid gap-2 mb-3">
+                                <button type="submit" class="btn btn-secondary text-dark me-2">Add comment</button>
+                            </div>
+
+                        </form>
+                        {% for comment in article.comments %}
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <img class="rounded-circle"
+                                         src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
+                                         alt="..."/>
+                                </div>
+                                <div class="ms-2 mb-3">
+                                    <div class="fw-bold"> {{ comment.commenter.name }}</div>
+                                    {{ comment.comment }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<!-- Footer-->
+<footer class="text-muted py-5">
+    <div class="container">
+        <p class="float-end mb-1">
+            <a href="#">Back to top</a>
+        </p>
+        <p class="mb-1">With ❤️️ and ☕️ Erik Belák &copy; 2023</p>
+    </div>
+</footer>
+</body>
+</html>

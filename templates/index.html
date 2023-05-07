@@ -1,64 +1,155 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Album example · Bootstrap v5.0</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/styles.css') }}">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/album/">
 
-    <title>Tvoja mama!</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/headers.css') }}" rel="stylesheet">
 
     <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
 
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
     </style>
 </head>
-
 <body>
-    <div class="container container-fluid my-5">
-        <div class="container container-fluid">
 
-        </div>
-        <h1 class="text-center txt-color">Articles</h1>
-        <div class="container col-offset-2 col-8">
-            <h5 class="text-center mt-4 mb-5 txt-color main-heading">
-                There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in form. Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit.
-            </h5>
-        </div>
-        <div>
 
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <a href="/articles?limit=9&page=1"
+           class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <img src="{{ url_for('static', filename='assets/brand/bootstrap-logo.svg') }}" alt="logo" height="30">
+        </a>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li>
+                <a href="{{ url_for('article_management_list', limit='9', page=1) }}"
+                   class="nav-link px-2 link-secondary">
+                    Articles
+                </a>
+            </li>
+            <li><a href="#" class="nav-link px-2 link-dark">Users</a></li>
+        </ul>
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+            <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+        </form>
+
+        <div class="col-md-3 text-end">
+            <a href="{{ url_for('login') }}"><button type="button" class="btn btn-secondary">Login</button></a>
+            <a href="{{ url_for('login') }}">
+                <button type="button" class="btn btn-light text-dark me-2">Sign-up</button>
+            </a>
         </div>
-        <div class="container container-fluid">
-            <div class="row">
-{#                {% for article in articles %}#}
-                <div class="col-sm-12 col-md-6 col-xl-4 txt-color">
-                    <div class="card mb-3 rounded-3">
-                        <div class="d-flex justify-content-center align-items-center img-div">
-                            <img class="img-content" src="https://i.ibb.co/Y7ZNfbJ/placeholder.png" alt="Card image cap">
-                        </div>
-                        <div class="card-body txt-color p-4">
-                            <p class="card-date fw-300 mt-2 mb-1">{{ article['meno'] }}</p>
-                            <h5 class="card-title mb-3">{{ article['priezvisko'] }}</h5>
-                            <p class="card-title fw-300">{{ article['priezvisko'] }}</p>
-                            <div class="row">
-                                <div class="col-8"></div>
-                                <div class="col-4 pe-0">
-                                    <div class="d-flex flex-row-reverse">
+    </header>
+</div>
+
+<main>
+    <div class="container container-fluid">
+        <form id="form1" method="GET" action="{{ url_for('render_create_article') }}">
+            <a href="javascript:{}" onclick="document.getElementById('form1').submit(); return false;"
+               class="link-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor"
+                     class="bi bi-plus-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+            </a>
+        </form>
+    </div>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for article in articles %}
+
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c"/>
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                            </svg>
+
+                            <div class="card-body">
+                                <h5 class="card-text">{{ article.name }}</h5>
+                                <p class="card-text">{{ article.text }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="{{ url_for('article_detail_detail', _id=article['_id']) }}">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        </a>
+                                        <a href="{{ url_for('article_detail_update', _id=article['_id']) }}">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                        </a>
+                                        <a href="{{ url_for('article_detail_delete', _id=article['_id']) }}">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                Delete
+                                            </button>
+                                        </a>
 
                                     </div>
+                                    <small class="text-muted">{{ article.date }}</small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-{#                {% endfor %}#}
+                {% endfor %}
             </div>
         </div>
+
+        <!-- Pagination -->
+        <nav class="my-4" aria-label="...">
+            <ul class="pagination pagination-circle justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('article_management_list', limit='9', page=prev_page) }}"
+                       tabindex="-1" aria-disabled="true">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Previous</button>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('article_management_list', limit='9', page=next_page) }}">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Next</button>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
+</main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<footer class="text-muted py-5">
+    <div class="container">
+        <p class="float-end mb-1">
+            <a href="#">Back to top</a>
+        </p>
+        <p class="mb-1">With ❤️️ and ☕️ Erik Belák &copy; 2023</p>
+    </div>
+</footer>
+
+
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
 </body>
-
 </html>
