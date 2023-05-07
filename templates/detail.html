@@ -53,20 +53,20 @@
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li>
                 <a href="{{ url_for('article_management_list', limit='9', page=1) }}"
-                   class="nav-link px-2 link-secondary">
+                   class="nav-link px-2 link-dark">
                     Articles
                 </a>
             </li>
-            <li><a href="#" class="nav-link px-2 link-dark">Users</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">My profile</a></li>
         </ul>
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
             <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
         </form>
 
         <div class="col-md-3 text-end">
-            <button type="button" class="btn btn-secondary">Login</button>
-            <button type="button" class="btn btn-light text-dark me-2">Sign-up</button>
-
+            <a href="{{ url_for('logout') }}">
+                <button type="button" class="btn btn-secondary">Logout</button>
+            </a>
         </div>
     </header>
 </div>

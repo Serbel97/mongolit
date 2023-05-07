@@ -6,9 +6,11 @@ from bson import ObjectId
 
 from flask import render_template, request, redirect, url_for
 
+from apps.decorators import require_auth
 from apps.encoders import MongoJSONEncoder
 
 
+@require_auth
 def list_articles(db):
     page = int(request.args.get('page', 1))
     limit = int(request.args.get('limit', 9))
@@ -32,19 +34,21 @@ def list_articles(db):
     )
 
 
+@require_auth
 def create_article(db):
     data = {
         'name': request.form['name'],
         'date': request.form['date'],
         'text': request.form['text_area_content'],
         'category': request.form.getlist('category'),
-        "author_id": ObjectId("64514ab751adf62ec0bb20ce"),
+        'author_id': request.user['_id']
     }
 
     db.article.insert_one(data)
     return redirect(url_for('article_management_list'))
 
 
+@require_auth
 def update_article(db, _id):
     data = {
         'name': request.form['name'],
@@ -58,23 +62,26 @@ def update_article(db, _id):
     return redirect(url_for('article_detail_detail', _id=_id))
 
 
+@require_auth
 def update_comment_article(db, _id):
     data = {
-        "comment": request.form['text_comment'],
-        "author": ObjectId("64514ab751adf62ec0bb20ce"),
-        "date": datetime.now()
+        'comment': request.form['text_comment'],
+        'author': request.user['_id'],
+        'date': datetime.now()
     }
 
-    db.article.update_one({'_id': ObjectId(str(_id))}, {"$push": {"comments": data}})
+    db.article.update_one({'_id': ObjectId(str(_id))}, {'$push': {'comments': data}})
 
     return redirect(url_for('article_detail_detail', _id=_id))
 
 
+@require_auth
 def delete_article(db, _id):
     db.article.delete_one({'_id': ObjectId(str(_id))})
     return redirect(url_for('article_management_list'))
 
 
+@require_auth
 def detail_article(db, _id):
     pipeline = [
         {

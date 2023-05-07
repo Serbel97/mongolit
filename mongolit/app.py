@@ -12,6 +12,7 @@ from flask_pymongo import pymongo
 from apps.encoders import MongoJSONEncoder
 from apps.views.article import create_article, list_articles, detail_article, delete_article, update_article, \
     update_comment_article
+from apps.views.auth import auth, logout, signup
 
 
 class FlaskProject(Flask):
@@ -33,14 +34,14 @@ class FlaskProject(Flask):
 
 
 flask = FlaskProject(__name__)
-
+flask.secret_key = 'your_secret_key'
 
 if __name__ == '__main__':
     flask.run()
 
 
 def render_create_article():
-    return render_template('create.html')
+    return render_template('create.html', token='64514ab751adf62ec0bb20ce')
 
 
 def render_update_article(db, _id):
@@ -89,3 +90,8 @@ flask.add_url_rule(
     '/articles/<_id>/comments', 'article_detail_create_comment',
     partial(update_comment_article, flask.db), methods=['post']
 )
+
+flask.add_url_rule('/', 'login', login, methods=['GET'])
+flask.add_url_rule('/auth', 'auth', partial(auth, flask.db), methods=['POST'])
+flask.add_url_rule('/logout', 'logout', logout, methods=['GET'])
+flask.add_url_rule('/signup', 'signup', partial(signup, flask.db), methods=['GET'])
