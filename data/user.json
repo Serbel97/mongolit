@@ -1,0 +1,85 @@
+[{
+  "_id": {
+    "$oid": "64514ab751adf62ec0bb20ce"
+  },
+  "name": "Eve",
+  "email": "eve@example.com",
+  "password": "$2b$12$8K0HckSs2cJsEkigq3FEq.Cl4t1vN8e8qK/rA6Yu0z7WTO59G51MW"
+},{
+  "_id": {
+    "$oid": "64514ab351adf62ec0bb20ca"
+  },
+  "name": "Alice",
+  "email": "alice@example.com",
+  "password": "$2b$12$Sz6hfYrL6yns9zyenqGlMOdi5e2oH95llxo2OEpUp51JLw9JzrHHW"
+},{
+  "_id": {
+    "$oid": "64514abb51adf62ec0bb20d2"
+  },
+  "name": "Daniel",
+  "email": "daniel@email.org",
+  "password": "$2b$12$8K0HckSs2cJsEkigq3FEq.Cl4t1vN8e8qK/rA6Yu0z7WTO59G51MW"
+},{
+  "_id": {
+    "$oid": "64514abc51adf62ec0bb20d3"
+  },
+  "name": "Sophia",
+  "email": "sophia@email.org",
+  "password": "$2b$12$8K0HckSs2cJsEkigq3FEq.Cl4t1vN8e8qK/rA6Yu0z7WTO59G51MW"
+},{
+  "_id": {
+    "$oid": "64514aba51adf62ec0bb20d1"
+  },
+  "name": "Emma",
+  "email": "emma@email.org",
+  "password": "$2b$12$8K0HckSs2cJsEkigq3FEq.Cl4t1vN8e8qK/rA6Yu0z7WTO59G51MW"
+},{
+  "_id": {
+    "$oid": "64514ab451adf62ec0bb20cb"
+  },
+  "name": "Bob",
+  "email": "bob@example.com",
+  "password": "$2b$12$8K0HckSs2cJsEkigq3FEq.Cl4t1vN8e8qK/rA6Yu0z7WTO59G51MW"
+},{
+  "_id": {
+    "$oid": "64514ab551adf62ec0bb20cc"
+  },
+  "name": "Charlie",
+  "email": "charlie@example.com",
+  "password": "$2b$12$8K0HckSs2cJsEkigq3FEq.Cl4t1vN8e8qK/rA6Yu0z7WTO59G51MW"
+},{
+  "_id": {
+    "$oid": "64514ab851adf62ec0bb20cf"
+  },
+  "name": "Laura",
+  "email": "laura@email.org",
+  "password": "$2b$12$8K0HckSs2cJsEkigq3FEq.Cl4t1vN8e8qK/rA6Yu0z7WTO59G51MW"
+},{
+  "_id": {
+    "$oid": "64514ab651adf62ec0bb20cd"
+  },
+  "name": "David",
+  "email": "david@example.com",
+  "password": "$2b$12$8K0HckSs2cJsEkigq3FEq.Cl4t1vN8e8qK/rA6Yu0z7WTO59G51MW"
+},{
+  "_id": {
+    "$oid": "64514ab951adf62ec0bb20d0"
+  },
+  "name": "William",
+  "email": "william@email.org",
+  "password": "$2b$12$8K0HckSs2cJsEkigq3FEq.Cl4t1vN8e8qK/rA6Yu0z7WTO59G51MW"
+},{
+  "_id": {
+    "$oid": "645a9e18ef2884103b7276a6"
+  },
+  "name": "Test",
+  "email": "test@example.com",
+  "password": "$2b$12$SFAWHt8FcmQIqzVlejmOx..T7lFyQ7vmBLp4.QCBex.TIr4xog9rK"
+},{
+  "_id": {
+    "$oid": "645ab93303ea051161248b49"
+  },
+  "name": "tester",
+  "email": "tester@example.com",
+  "password": "$2b$12$BljU0UW1JQzOjsw4wkSiuu5PePm4ioO34OGTdCOBUD3.mAsD0.ZkW"
+}]
