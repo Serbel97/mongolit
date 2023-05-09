@@ -99,8 +99,9 @@
                 </header>
 
                 <!-- Preview image figure-->
-                <figure class="mb-4"><img class="img-fluid rounded"
-                                          src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..."/></figure>
+                <figure class="mb-4"><img width="100%" height="225" role="img"
+                                          src="{{ url_for('static', filename=article.image) }}" alt="Uploaded image">
+                </figure>
                 <!-- Post content-->
                 <section class="mb-5">
                     <p class="fs-5 mb-4">{{ article.text }}</p>

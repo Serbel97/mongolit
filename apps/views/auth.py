@@ -41,6 +41,6 @@ def signup(db):
         "password": hashed_password.decode('utf-8')
     }
 
-    db.users.insert_one(user)
+    db.user.insert_one(user)
 
     return redirect(url_for('login'))

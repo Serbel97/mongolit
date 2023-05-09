@@ -15,10 +15,11 @@ from apps.views.article import create_article, list_articles, detail_article, de
 from apps.views.auth import auth, logout, signup
 from apps.views.user import users_me, update_user, update_user_password
 
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+
 
 class FlaskProject(Flask):
     def __init__(self, __name__):
-        BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
         template_dir = os.path.join(BASE_DIR, 'templates')
         static_dir = os.path.join(BASE_DIR, 'static')
@@ -56,6 +57,10 @@ def login():
     return render_template('login.html')
 
 
+def render_register():
+    return render_template('auth_forms/register.html')
+
+
 # retrieve all articles
 flask.add_url_rule('/articles', 'article_management_list', partial(list_articles, flask.db), methods=['GET'])
 
@@ -70,7 +75,6 @@ flask.add_url_rule('/create', 'render_create_article', render_create_article, me
 flask.add_url_rule(
     '/articles/create', 'article_management_create', partial(create_article, flask.db), methods=['POST']
 )
-
 
 # redner update article
 flask.add_url_rule(
@@ -95,10 +99,12 @@ flask.add_url_rule(
 flask.add_url_rule('/', 'login', login, methods=['GET'])
 flask.add_url_rule('/auth', 'auth', partial(auth, flask.db), methods=['POST'])
 flask.add_url_rule('/logout', 'logout', partial(logout, flask.db), methods=['GET'])
-flask.add_url_rule('/signup', 'signup', partial(signup, flask.db), methods=['GET'])
+flask.add_url_rule('/signup', 'signup', partial(signup, flask.db), methods=['POST'])
 
 flask.add_url_rule('/users/me', 'user_profile', partial(users_me, flask.db), methods=['GET'])
 flask.add_url_rule('/users/<_id>/update', 'user_update', partial(update_user, flask.db), methods=['POST'])
 flask.add_url_rule(
     '/users/<_id>/update/password', 'user_update_pwd', partial(update_user_password, flask.db), methods=['POST']
 )
+
+flask.add_url_rule('/register', 'auth_form', render_register, methods=['GET'])

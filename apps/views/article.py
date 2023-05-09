@@ -1,13 +1,20 @@
 import json
 import math
+import os
 from datetime import datetime
+from pathlib import Path
 
 from bson import ObjectId
 
 from flask import render_template, request, redirect, url_for
 
+from werkzeug.utils import secure_filename
+
 from apps.decorators import require_auth
 from apps.encoders import MongoJSONEncoder
+
+
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
 
 @require_auth
@@ -36,12 +43,18 @@ def list_articles(db):
 
 @require_auth
 def create_article(db):
+    file = request.files['image']
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(BASE_DIR, 'static/images', filename))
+
     data = {
         'name': request.form['name'],
         'date': request.form['date'],
         'text': request.form['text_area_content'],
         'category': request.form.getlist('category'),
-        'author_id': request.user['_id']
+        'author_id': request.user['_id'],
+        'image': f'private/{filename}'
+
     }
 
     db.article.insert_one(data)
@@ -131,6 +144,7 @@ def detail_article(db, _id):
                 "text": {"$first": "$text"},
                 "author_id": {"$first": "$author_id"},
                 "category": {"$first": "$category"},
+                "image": {"$first": "$image"},
                 "author": {"$first": "$author"},
                 "comments": {
                     "$push": {
@@ -148,6 +162,7 @@ def detail_article(db, _id):
                 "name": 1,
                 "date": 1,
                 "text": 1,
+                "image": 1,
                 "author_id": 1,
                 "category": 1,
                 "author.name": 1,
