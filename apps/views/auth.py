@@ -6,6 +6,7 @@ from flask import request, redirect, url_for, session
 
 from apps.decorators import require_auth
 from apps.encoders import MongoJSONEncoder
+from apps.user_role import UserRole
 
 
 def auth(db):
@@ -38,7 +39,8 @@ def signup(db):
     user = {
         "name": request.form['name'],
         "email": request.form['email'],
-        "password": hashed_password.decode('utf-8')
+        "password": hashed_password.decode('utf-8'),
+        "group": UserRole.USER
     }
 
     db.user.insert_one(user)

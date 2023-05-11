@@ -92,9 +92,11 @@
                         {% endfor %}
                     </div>
                     <!-- Button on the right side -->
-                    <a href="{{ url_for('article_detail_update', _id=article['_id']) }}">
-                        <button type="button" class="btn btn-light text-dark me-2">Edit</button>
-                    </a>
+                    {% if user.group == user_role.ADMIN.value or user._id == article.author_id %}
+                        <a href="{{ url_for('article_detail_update', _id=article['_id']) }}">
+                            <button type="button" class="btn btn-light text-dark me-2">Edit</button>
+                        </a>
+                    {% endif %}
 
                 </header>
 

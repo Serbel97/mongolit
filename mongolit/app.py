@@ -11,7 +11,7 @@ from flask_pymongo import pymongo
 
 from apps.encoders import MongoJSONEncoder
 from apps.views.article import create_article, list_articles, detail_article, delete_article, update_article, \
-    update_comment_article
+    add_comment_article
 from apps.views.auth import auth, logout, signup
 from apps.views.user import users_me, update_user, update_user_password
 
@@ -93,7 +93,7 @@ flask.add_url_rule(
 # call create article comment
 flask.add_url_rule(
     '/articles/<_id>/comments', 'article_detail_create_comment',
-    partial(update_comment_article, flask.db), methods=['post']
+    partial(add_comment_article, flask.db), methods=['post']
 )
 
 flask.add_url_rule('/', 'login', login, methods=['GET'])

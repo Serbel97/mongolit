@@ -5,14 +5,13 @@ from datetime import datetime
 from pathlib import Path
 
 from bson import ObjectId
-
 from flask import render_template, request, redirect, url_for
-
 from werkzeug.utils import secure_filename
 
+from apps.checkers.article import ArticleObjectChecker
 from apps.decorators import require_auth
 from apps.encoders import MongoJSONEncoder
-
+from apps.user_role import UserRole
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
@@ -38,6 +37,8 @@ def list_articles(db):
         articles=items,
         prev_page=1 if page - 1 == 0 else page - 1,
         next_page=pages if page + 1 > pages else page + 1,
+        user=request.user,
+        user_role=UserRole
     )
 
 
@@ -63,6 +64,10 @@ def create_article(db):
 
 @require_auth
 def update_article(db, _id):
+    article = db.article.find_one({'_id': ObjectId(str(_id))})
+    if not ArticleObjectChecker.article(request_user=request.user, article=article):
+        return redirect(url_for('article_management_list'))
+
     data = {
         'name': request.form['name'],
         'date': request.form['date'],
@@ -82,7 +87,7 @@ def update_article(db, _id):
 
 
 @require_auth
-def update_comment_article(db, _id):
+def add_comment_article(db, _id):
     data = {
         'comment': request.form['text_comment'],
         'author': request.user['_id'],
@@ -96,6 +101,10 @@ def update_comment_article(db, _id):
 
 @require_auth
 def delete_article(db, _id):
+    article = db.article.find_one({'_id': ObjectId(str(_id))})
+    if not ArticleObjectChecker.article(request_user=request.user, article=article):
+        return redirect(url_for('article_management_list'))
+
     db.article.delete_one({'_id': ObjectId(str(_id))})
     return redirect(url_for('article_management_list'))
 
@@ -185,4 +194,4 @@ def detail_article(db, _id):
 
     item = next(result, None)
 
-    return render_template('detail.html', article=item)
+    return render_template('detail.html', article=item, user=request.user, user_role=UserRole)

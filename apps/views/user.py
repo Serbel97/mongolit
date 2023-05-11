@@ -5,6 +5,7 @@ import bcrypt
 from bson import ObjectId
 from flask import render_template, request, redirect, url_for
 
+from apps.checkers.user import UserObjectChecker
 from apps.decorators import require_auth
 from apps.encoders import MongoJSONEncoder
 
@@ -40,6 +41,9 @@ def users_me(db):
 
 @require_auth
 def update_user(db, _id):
+    user = db.user.find_one({'_id': ObjectId(str(_id))})
+    if not UserObjectChecker.user(request_user=request.user, user=user):
+        return redirect(url_for('article_management_list'))
     data = {
         'name': request.form['name'],
         'email': request.form['email'],
@@ -52,6 +56,10 @@ def update_user(db, _id):
 
 @require_auth
 def update_user_password(db, _id):
+    user = db.user.find_one({'_id': ObjectId(str(_id))})
+    if not UserObjectChecker.user(request_user=request.user, user=user):
+        return redirect(url_for('article_management_list'))
+
     password = request.form['password'].encode('utf-8')
     hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
 
