@@ -27,7 +27,7 @@
         </h4>
     </div>
     <div class="col-sm-12 col-md-12 offset-md-2 col-lg-4 offset-lg-4 p-5 border border-custom border-1">
-        <form method="POST" action="/articles/{{ article._id }}/update/call">
+        <form method="POST" action="/articles/{{ article._id }}/update/call" enctype="multipart/form-data">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" name="_id" id="_id" placeholder="_id" value="{{ article._id }}"
                        readonly></input>
@@ -42,6 +42,9 @@
                 <input type="text" class="form-control" name="date" id="date" placeholder="date"
                        value="{{ article.date }}"></input>
                 <label for="date">Dátum</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
             </div>
             <div class="form-floating mb-3">
                 <textarea class="form-control custom-textarea" rows="20" name="text_area_content" id="text"

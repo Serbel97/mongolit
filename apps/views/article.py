@@ -70,6 +70,12 @@ def update_article(db, _id):
         'category': request.form.getlist('category'),
     }
 
+    if request.files.get('image'):
+        file = request.files['image']
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(BASE_DIR, 'static/images', filename))
+        data['image'] = f'private/{filename}'
+
     db.article.update_one({'_id': ObjectId(str(_id))}, {'$set': data})
 
     return redirect(url_for('article_detail_detail', _id=_id))

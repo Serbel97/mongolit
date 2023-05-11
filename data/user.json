@@ -68,18 +68,4 @@
   "name": "William",
   "email": "william@email.org",
   "password": "$2b$12$8K0HckSs2cJsEkigq3FEq.Cl4t1vN8e8qK/rA6Yu0z7WTO59G51MW"
-},{
-  "_id": {
-    "$oid": "645a9e18ef2884103b7276a6"
-  },
-  "name": "Test",
-  "email": "test@example.com",
-  "password": "$2b$12$SFAWHt8FcmQIqzVlejmOx..T7lFyQ7vmBLp4.QCBex.TIr4xog9rK"
-},{
-  "_id": {
-    "$oid": "645ab93303ea051161248b49"
-  },
-  "name": "tester",
-  "email": "tester@example.com",
-  "password": "$2b$12$BljU0UW1JQzOjsw4wkSiuu5PePm4ioO34OGTdCOBUD3.mAsD0.ZkW"
 }]
