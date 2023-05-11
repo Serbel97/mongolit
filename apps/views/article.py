@@ -22,8 +22,12 @@ def list_articles(db):
     limit = int(request.args.get('limit', 9))
     total = db.article.count_documents({})
 
+    query = request.args.get('query', {})
+    if query:
+        query = {'name': {'$regex': query, '$options': 'i'}}
+
     items = []
-    articles = db.article.find().sort('date', -1).skip(limit * (page - 1)).limit(limit)
+    articles = db.article.find(query).sort('date', -1).skip(limit * (page - 1)).limit(limit)
     for article in articles:
         article['text'] = article['text'][:25] + '...'
         items.append(article)

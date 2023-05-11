@@ -16,8 +16,13 @@ def users_me(db):
     limit = int(request.args.get('limit', 9))
     total = db.article.count_documents({'author_id': request.user['_id']})
 
+    query = request.args.get('query', {})
+    if query:
+        query = {'name': {'$regex': query, '$options': 'i'}}
+    query['author_id']=  request.user['_id']
+
     articles = db.article.find(
-        {'author_id': request.user['_id']}
+        query
     ).sort('date', -1).skip(limit * (page - 1)).limit(limit)
 
     items = []
