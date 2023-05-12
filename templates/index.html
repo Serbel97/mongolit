@@ -45,11 +45,15 @@
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li>
                 <a href="{{ url_for('article_management_list', limit='9', page=1) }}"
-                   class="nav-link px-2 link-secondary">
+                   class="nav-link px-2 link-dark">
                     Articles
                 </a>
             </li>
-            <li><a href="{{ url_for('user_profile') }}" class="nav-link px-2 link-dark">My profile</a></li>
+            <li><a href="{{ url_for('user_profile') }}" class="nav-link px-2 link-secondary">My profile</a></li>
+            {% if user.group == user_role.ADMIN.value[0] %}
+                <li><a href="{{ url_for('admin_users') }}" class="nav-link px-2 link-secondary">Admin</a></li>
+            {% endif %}
+
         </ul>
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="GET" action="/articles">
             <input type="search" name="query" class="form-control" placeholder="Search..." aria-label="Search">
@@ -94,7 +98,7 @@
                                         <a href="{{ url_for('article_detail_detail', _id=article['_id']) }}">
                                             <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
                                         </a>
-                                        {% if user.group == user_role.ADMIN.value %}
+                                        {% if user.group == user_role.ADMIN.value[0] %}
                                             <a href="{{ url_for('article_detail_update', _id=article['_id']) }}">
                                                 <button type="button" class="btn btn-sm btn-outline-secondary">Edit
                                                 </button>

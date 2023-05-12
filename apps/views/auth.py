@@ -40,7 +40,7 @@ def signup(db):
         "name": request.form['name'],
         "email": request.form['email'],
         "password": hashed_password.decode('utf-8'),
-        "group": UserRole.USER
+        "group": UserRole.USER.value[0]
     }
 
     db.user.insert_one(user)

@@ -13,7 +13,7 @@ from apps.encoders import MongoJSONEncoder
 from apps.views.article import create_article, list_articles, detail_article, delete_article, update_article, \
     add_comment_article
 from apps.views.auth import auth, logout, signup
-from apps.views.user import users_me, update_user, update_user_password
+from apps.views.user import users_me, update_user, update_user_password, list_users, delete_user, update_user_group
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
@@ -108,3 +108,11 @@ flask.add_url_rule(
 )
 
 flask.add_url_rule('/register', 'auth_form', render_register, methods=['GET'])
+
+flask.add_url_rule('/admin/users', 'admin_users', partial(list_users, flask.db), methods=['GET'])
+flask.add_url_rule(
+    '/admin/users/<_id>/delete', 'admin_users_delete', partial(delete_user, flask.db), methods=['GET']
+)
+flask.add_url_rule(
+    '/admin/users/<_id>/group/<group>', 'admin_users_group', partial(update_user_group, flask.db), methods=['GET']
+)

@@ -58,7 +58,7 @@ def create_article(db):
         'text': request.form['text_area_content'],
         'category': request.form.getlist('category'),
         'author_id': request.user['_id'],
-        'image': f'private/{filename}'
+        'image': f'images/{filename}'
 
     }
 
@@ -83,7 +83,7 @@ def update_article(db, _id):
         file = request.files['image']
         filename = secure_filename(file.filename)
         file.save(os.path.join(BASE_DIR, 'static/images', filename))
-        data['image'] = f'private/{filename}'
+        data['image'] = f'images/{filename}'
 
     db.article.update_one({'_id': ObjectId(str(_id))}, {'$set': data})
 
@@ -170,7 +170,14 @@ def detail_article(db, _id):
                         "$cond": [
                             {"$eq": ["$comments", {}]},
                             None,
-                            "$comments"
+                            {
+                                "comment": "$comments.comment",
+                                "date": "$comments.date",
+                                "commenter": {
+                                    "name": {"$ifNull": ["$comments.commenter.name", "Unknown"]},
+                                    "email": {"$ifNull": ["$comments.commenter.email", "Unknown"]}
+                                }
+                            }
                         ]
                     }
                 }

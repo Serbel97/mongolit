@@ -6,8 +6,9 @@ from bson import ObjectId
 from flask import render_template, request, redirect, url_for
 
 from apps.checkers.user import UserObjectChecker
-from apps.decorators import require_auth
+from apps.decorators import require_auth, require_admin
 from apps.encoders import MongoJSONEncoder
+from apps.user_role import UserRole
 
 
 @require_auth
@@ -19,7 +20,7 @@ def users_me(db):
     query = request.args.get('query', {})
     if query:
         query = {'name': {'$regex': query, '$options': 'i'}}
-    query['author_id']=  request.user['_id']
+    query['author_id'] = request.user['_id']
 
     articles = db.article.find(
         query
@@ -40,7 +41,8 @@ def users_me(db):
         articles=items,
         prev_page=1 if page - 1 == 0 else page - 1,
         next_page=pages if page + 1 > pages else page + 1,
-        total=total
+        total=total,
+        user_role=UserRole
     )
 
 
@@ -75,3 +77,52 @@ def update_user_password(db, _id):
     db.user.update_one({'_id': ObjectId(str(_id))}, {'$set': data})
 
     return redirect(url_for('user_profile'))
+
+
+@require_auth
+@require_admin
+def list_users(db):
+    page = int(request.args.get('page', 1))
+    limit = int(request.args.get('limit', 10))
+    total = db.user.count_documents({})
+
+    query = request.args.get('query', {})
+    if query:
+        query = {'name': {'$regex': query, '$options': 'i'}}
+
+    items = []
+    users = db.user.find(query).sort('name', -1).skip(limit * (page - 1)).limit(limit)
+    for user in users:
+        items.append(user)
+
+    items = json.loads(MongoJSONEncoder().encode(items))
+
+    pages = math.ceil(total / limit)
+
+    return render_template(
+        'admin/users.html',
+        users=items,
+        prev_page=1 if page - 1 == 0 else page - 1,
+        next_page=pages if page + 1 > pages else page + 1,
+        user_role=UserRole
+    )
+
+
+@require_auth
+@require_admin
+def delete_user(db, _id):
+    db.article.delete_many({'author_id': ObjectId(str(_id))})
+    db.user.delete_one({'_id': ObjectId(str(_id))})
+    return redirect(url_for('admin_users'))
+
+
+@require_auth
+@require_admin
+def update_user_group(db, _id, group):
+    data = {
+        'group': int(group),
+    }
+
+    db.user.update_one({'_id': ObjectId(str(_id))}, {'$set': data})
+
+    return redirect(url_for('admin_users'))

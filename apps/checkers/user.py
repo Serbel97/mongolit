@@ -7,7 +7,7 @@ class UserObjectChecker:
         if request_user['_id'] == user['_id']:
             return True
 
-        if request_user['group'] == UserRole.ADMIN:
+        if request_user['group'] == UserRole.ADMIN.value[0]:
             return True
 
         return False

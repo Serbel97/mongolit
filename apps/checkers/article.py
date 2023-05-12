@@ -7,7 +7,7 @@ class ArticleObjectChecker:
         if request_user['_id'] == article['author_id']:
             return True
 
-        if request_user['group'] == UserRole.ADMIN:
+        if request_user['group'] == UserRole.ADMIN.value[0]:
             return True
 
         return False
