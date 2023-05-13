@@ -37,14 +37,15 @@
 
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="/articles?limit=9&page=1"
-           class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-            <img src="{{ url_for('static', filename='assets/brand/bootstrap-logo.svg') }}" alt="logo" height="30">
+        <a href={{ url_for('article_management_list') }}
+                   class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <img src="{{ url_for('static', filename='assets/brand/bootstrap-logo.svg') }}" alt="logo"
+             height="30">
         </a>
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li>
-                <a href="{{ url_for('article_management_list', limit='9', page=1) }}"
+                <a href="{{ url_for('article_management_list') }}"
                    class="nav-link px-2 link-dark">
                     Articles
                 </a>
@@ -55,7 +56,8 @@
             {% endif %}
 
         </ul>
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="GET" action="/articles">
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="GET"
+              action="{{ url_for('article_management_list') }}">
             <input type="search" name="query" class="form-control" placeholder="Search..." aria-label="Search">
         </form>
 

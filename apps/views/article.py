@@ -37,7 +37,7 @@ def list_articles(db):
     pages = math.ceil(total / limit)
 
     return render_template(
-        'index.html',
+        'article/index.html',
         articles=items,
         prev_page=1 if page - 1 == 0 else page - 1,
         next_page=pages if page + 1 > pages else page + 1,
@@ -205,4 +205,4 @@ def detail_article(db, _id):
 
     item = next(result, None)
 
-    return render_template('detail.html', article=item, user=request.user, user_role=UserRole)
+    return render_template('article/detail.html', article=item, user=request.user, user_role=UserRole)

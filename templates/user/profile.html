@@ -44,7 +44,7 @@
 <body>
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="/articles?limit=9&page=1"
+        <a href={{ url_for('article_management_list') }}
            class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
             <img src="{{ url_for('static', filename='assets/brand/bootstrap-logo.svg') }}" alt="logo"
                  height="30">
@@ -52,7 +52,7 @@
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li>
-                <a href="{{ url_for('article_management_list', limit='9', page=1) }}"
+                <a href="{{ url_for('article_management_list') }}"
                    class="nav-link px-2 link-secondary">
                     Articles
                 </a>
@@ -90,7 +90,8 @@
 
                     <div class="card mb-4 mb-lg-0">
                         <div class="card-body p-0">
-                            <form method="POST" action="/articles/create" enctype="multipart/form-data">
+                            <form method="POST" action="{{ url_for('article_management_create') }}"
+                                  enctype="multipart/form-data">
                                 <div class="form-floating mb-3"
                                      style="margin-left: 20px; margin-right: 20px; margin-top: 20px;">
                                     <input type="text" class="form-control" name="name" id="title"
@@ -136,7 +137,7 @@
                 <div class="col-lg-8">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <form method="POST" action="/users/{{ user._id }}/update">
+                            <form method="POST" action="{{ url_for('user_update', _id=user._id) }}">
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <p class="mb-0">Full Name</p>
@@ -161,7 +162,7 @@
                                 </div>
                             </form>
                             <hr>
-                            <form method="POST" action="/users/{{ user._id }}/update/password">
+                            <form method="POST" action="{{ url_for('user_update_pwd', _id=user._id) }}">
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <p class="mb-0">Password</p>

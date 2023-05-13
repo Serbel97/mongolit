@@ -43,18 +43,18 @@ if __name__ == '__main__':
 
 
 def render_create_article():
-    return render_template('create.html')
+    return render_template('article/create.html')
 
 
 def render_update_article(db, _id):
     item = db.article.find_one({'_id': ObjectId(str(_id))})
     item = json.loads(MongoJSONEncoder().encode(item))
 
-    return render_template('update.html', article=item)
+    return render_template('article/update.html', article=item)
 
 
 def login():
-    return render_template('login.html')
+    return render_template('auth_forms/login.html')
 
 
 def render_register():

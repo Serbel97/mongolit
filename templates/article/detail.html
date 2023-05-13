@@ -43,16 +43,13 @@
 <!-- Responsive navbar-->
 <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24"
-                 fill="currentColor" viewBox="0 0 16 16">
-                <use xlink:href="#bootstrap"></use>
-            </svg>
-        </a>
+        <a href={{ url_for('article_management_list') }} class="d-flex align-items-center col-md-3 mb-2 mb-md-0
+           text-dark text-decoration-none"><img
+            src="{{ url_for('static', filename='assets/brand/bootstrap-logo.svg') }}" alt="logo" height="30"></a>
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li>
-                <a href="{{ url_for('article_management_list', limit='9', page=1) }}"
+                <a href="{{ url_for('article_management_list') }}"
                    class="nav-link px-2 link-dark">
                     Articles
                 </a>
@@ -63,9 +60,6 @@
             {% endif %}
 
         </ul>
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-            <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-        </form>
 
         <div class="col-md-3 text-end">
             <a href="{{ url_for('logout') }}">
@@ -118,7 +112,8 @@
             <section class="mb-5">
                 <div class="card bg-light">
                     <div class="card-body">
-                        <form class="mb-4" method="POST" action="/articles/{{ article._id }}/comments">
+                        <form class="mb-4" method="POST"
+                              action="{{ url_for('article_detail_create_comment', _id=article._id) }}">
                             <textarea class="form-control" rows="3" name="text_comment"
                                       placeholder="Join the discussion and leave a comment!"></textarea>
                             <div class="d-grid gap-2 mb-3 ms-2" style="margin-top: 20px;">

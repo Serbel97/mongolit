@@ -27,7 +27,7 @@
         </h4>
     </div>
     <div class="col-sm-12 col-md-12 offset-md-2 col-lg-4 offset-lg-4 p-5 border border-custom border-1">
-        <form method="POST" action="/articles/{{ article._id }}/update/call" enctype="multipart/form-data">
+        <form method="POST" action="{{ url_for('article_detail_update_call', _id=article._id) }}" enctype="multipart/form-data">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" name="_id" id="_id" placeholder="_id" value="{{ article._id }}"
                        readonly></input>
