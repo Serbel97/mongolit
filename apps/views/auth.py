@@ -13,9 +13,8 @@ def auth(db):
     user = db.user.find_one({'email': request.form['email']})
 
     if user:
-        # Get the password from the form submission
         request_password = request.form['password'].encode('utf-8')
-        stored_password = user['password'].encode('utf-8')  # Encode the stored password
+        stored_password = user['password'].encode('utf-8')
         is_valid_password = bcrypt.checkpw(request_password, stored_password)
 
         if is_valid_password:
