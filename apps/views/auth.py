@@ -1,7 +1,6 @@
 import json
 
 import bcrypt
-
 from flask import request, redirect, url_for, session
 
 from apps.decorators import require_auth

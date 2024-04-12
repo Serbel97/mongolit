@@ -22,9 +22,7 @@ def users_me(db):
         query = {'name': {'$regex': query, '$options': 'i'}}
     query['author_id'] = request.user['_id']
 
-    articles = db.article.find(
-        query
-    ).sort('date', -1).skip(limit * (page - 1)).limit(limit)
+    articles = db.article.find(query).sort('date', -1).skip(limit * (page - 1)).limit(limit)
 
     items = []
     for article in articles:

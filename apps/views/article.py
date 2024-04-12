@@ -59,7 +59,6 @@ def create_article(db):
         'category': request.form.getlist('category'),
         'author_id': request.user['_id'],
         'image': f'images/{filename}'
-
     }
 
     db.article.insert_one(data)

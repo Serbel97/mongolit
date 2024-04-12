@@ -32,7 +32,11 @@ class FlaskProject(Flask):
             exit(0)
 
         client = pymongo.MongoClient(os.getenv('MONGODB_KEY'))
-        self.db = client.get_database(os.getenv('MONGODB'))
+        self._db = client.get_database(os.getenv('MONGODB'))
+
+    @property
+    def db(self):
+        return self._db
 
 
 flask = FlaskProject(__name__)
